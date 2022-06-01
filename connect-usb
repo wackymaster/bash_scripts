@@ -1,0 +1,5 @@
+#!/bin/sh
+# Simple script to connect usb devices
+lsblk
+read -p "Connect to (NAME): " NAME
+sudo mount "/dev/${NAME}" /media/usb

@@ -1,0 +1,21 @@
+#!/bin/sh
+nmcli device wifi list
+echo "Searching networks..."
+read -p "Connect to (SSID): " SSID
+# See if we connected here before
+CONNET="$(nmcli connection)"
+if [[ "$CONNET" =~ .*"$SSID".* ]]; then
+	nmcli device wifi connect "${SSID}" 
+	exit
+fi
+# Otherwise ask for password
+read -s -p "Password: " PASS
+echo
+read -r -p "Hidden? [y/N] " HIDDEN
+HIDDEN=${HIDDEN,,}  
+if [[ "$HIDDEN" =~ ^(yes|y)$ ]] 
+then
+	nmcli device wifi connect "${SSID}" password "${PASS}" hidden true
+else
+	nmcli device wifi connect "${SSID}" password "${PASS}"
+fi

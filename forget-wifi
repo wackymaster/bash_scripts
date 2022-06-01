@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "Saved networks:"
+nmcli connection
+read -p "Forget network (SSID): " SSID
+nmcli connection delete "${SSID}"

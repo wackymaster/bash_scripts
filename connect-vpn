@@ -1,0 +1,6 @@
+#!/bin/sh
+# A simple script to connect to vpn using Cisco anyconnect
+DEFAULT="cuvpn.cuvpn.cornell.edu"
+read -p "Connect to network (default=${DEFAULT}): " VPN
+VPN=${VPN:-"${DEFAULT}"}
+sudo openconnect "${VPN}"
