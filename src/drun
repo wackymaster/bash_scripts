@@ -1,2 +1,3 @@
 #!/bin/sh
+# "disown run" - for running applications without holding up the terminal
 $@ & disown
