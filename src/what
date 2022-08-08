@@ -1,7 +1,12 @@
 #!/bin/sh
+# Gives me tips on when I am lost on commands
 while IFS= read -r LINE; do
-	if [[ $LINE = \#* ]] ; then
-		echo -e "\e[1;033m$LINE\e[0m"
+	if [[ $LINE = @* ]] ; then
+		HEADER=${LINE#*@}
+		echo -e "\e[1;035m$HEADER\e[0m"
+	elif [[ $LINE = =* ]] ; then
+		SUBHEADER=${LINE#*=}
+		echo -e "\e[3;033m$SUBHEADER\e[0m"
 	else
 		echo $LINE
 	fi

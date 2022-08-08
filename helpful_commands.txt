@@ -1,15 +1,21 @@
-# Stop program/process
+@Linux Commands
+=Stop program/process
 ps -aux | grep {name}
 kill {id}
-# Count lines of code
+=Count lines of code
 cloc --by-file --include-lang={lang} .
-# Give permission
+=Give permission
 chown -R {username} {file}
-# Personal bash scripts
+
+@Apps/Programs
+timeshift-gtk	=	backups
+arandr			=	displays/gui
+
+@Personal commands/scripts
 bat-life		=	battery health
 pac-rmorphan	=	remove orphan packages
 connect-usb		=	connect-usb
-# Aliases
+=Aliases
 hib				=	systemctl hibernate
 blu				=	bluetootctl power on
 sinkhead		=   headphones
