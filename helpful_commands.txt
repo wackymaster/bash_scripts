@@ -1,0 +1,17 @@
+# Stop program/process
+ps -aux | grep {name}
+kill {id}
+# Count lines of code
+cloc --by-file --include-lang={lang} .
+# Give permission
+chown -R {username} {file}
+# Personal bash scripts
+bat-life		=	battery health
+pac-rmorphan	=	remove orphan packages
+connect-usb		=	connect-usb
+# Aliases
+hib				=	systemctl hibernate
+blu				=	bluetootctl power on
+sinkhead		=   headphones
+sinkspeak		=   speakers
+sinks			=   see audio
