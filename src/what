@@ -1,5 +1,9 @@
 #!/bin/sh
 # Gives me tips on when I am lost on commands
+# Usage:
+# `what`: (no arguments) give entire list of help
+# `what {term}`: search for term (similar to grep), but gives the context of the term (WIP)
+
 
 # If we want to search for specific term (and get its buffer content)
 use_buffer=0
