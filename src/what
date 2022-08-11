@@ -1,13 +1,60 @@
 #!/bin/sh
 # Gives me tips on when I am lost on commands
+
+# If we want to search for specific term (and get its buffer content)
+use_buffer=0
+# When we found a match and want to empty the buffer after the next header
+empty_buffer=0
+buffer=()
+
+function printBuffer() {
+	if [ $empty_buffer -eq 1 ]; then
+		for i in "${buffer[@]}";
+		do
+			echo -e "$i"
+		done
+		empty_buffer=0
+	fi
+	resetBuffer
+}
+
+function resetBuffer() {
+	buffer=()
+}
+
+function handleLine() {
+	if [ $use_buffer -eq 1 ]; then
+		buffer=(${buffer[@]} "$1")
+	else
+		# Print to console, use formatting
+		if [ $2 -eq 1 ]; then
+			echo -e "\e[1;035m$1\e[0m"
+		elif [ $2 -eq 2 ]; then
+			echo -e "\e[3;033m$1\e[0m"
+		else
+			echo "$LINE"
+		fi
+	fi
+}
+
+if [ $# -gt 0 ]; then
+	use_buffer=1
+fi
+
 while IFS= read -r LINE; do
-	if [[ $LINE = @* ]] ; then
+	if [ $use_buffer -eq 1 ] && [[ $LINE = *$@* ]]; then
+		empty_buffer=1
+		handleLine "$LINE" 0
+	elif [[ $LINE = @* ]] ; then
 		HEADER=${LINE#*@}
-		echo -e "\e[1;035m$HEADER\e[0m"
+		printBuffer
+		handleLine "$HEADER" 1
 	elif [[ $LINE = =* ]] ; then
 		SUBHEADER=${LINE#*=}
-		echo -e "\e[3;033m$SUBHEADER\e[0m"
+		printBuffer
+		handleLine "$SUBHEADER" 2
 	else
-		echo $LINE
+		handleLine "$LINE" 0
 	fi
+	printBuffer
 done < $HELP

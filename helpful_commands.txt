@@ -6,18 +6,26 @@ kill {id}
 cloc --by-file --include-lang={lang} .
 =Give permission
 chown -R {username} {file}
+=Print rest of file after match
+sed -n '/{string}/,$p' {file}
 
 @Apps/Programs
-timeshift-gtk	=	backups
-arandr			=	displays/gui
+=Programs
+timeshift-gtk
+arandr
+=Tmux
+tmux new -s {session_name}
+tmux attach -t {session_name}
+{Ctrl-b}-d to Exit
 
 @Personal commands/scripts
+=Bash scripts
 bat-life		=	battery health
-pac-rmorphan	=	remove orphan packages
+pac-rmorphan		=	remove orphan packages
 connect-usb		=	connect-usb
 =Aliases
-hib				=	systemctl hibernate
-blu				=	bluetootctl power on
-sinkhead		=   headphones
-sinkspeak		=   speakers
-sinks			=   see audio
+hib			=	systemctl hibernate
+blu			=	bluetootctl power on
+sinkhead		=	headphones
+sinkspeak		=	speakers
+sinks			=	see audio
