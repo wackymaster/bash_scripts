@@ -8,6 +8,8 @@ cloc --by-file --include-lang={lang} .
 chown -R {username} {file}
 =Print rest of file after match
 sed -n '/{string}/,$p' {file}
+=storage/disk usage
+df
 
 @Apps/Programs
 =Programs
@@ -18,11 +20,18 @@ tmux new -s {session_name}
 tmux attach -t {session_name}
 {Ctrl-b}-d to Exit
 
+@Keystrokes
+=sxhkd
+c-alt-shift+{hjkl}	=	sxhkd expand window
+
 @Personal commands/scripts
 =Bash scripts
 bat-life		=	battery health
 pac-rmorphan		=	remove orphan packages
 connect-usb		=	connect-usb
+update-chezmoi		=	update dotfiles
+connect-wifi		=	connect wifi
+forget-wifi		=	forget wifi
 =Aliases
 hib			=	systemctl hibernate
 blu			=	bluetootctl power on

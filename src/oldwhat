@@ -1,0 +1,81 @@
+#!/bin/sh
+# Gives me tips on when I am lost on commands
+# Usage:
+# `what`: (no arguments) give entire list of help
+# `what {term}`: search for term (similar to grep), but gives the context of the term (WIP)
+
+
+# If we want to search for specific term (and get its buffer content)
+use_buffer=0
+# When we found a match and want to empty the buffer after the next header
+empty_buffer=0
+# Whether we matched on a line (not header)
+line_match=0
+buffer=()
+
+function printBuffer() {
+	if [ $empty_buffer -eq 1 ]; then
+		use_buffer=0 # temporarily disable so we print
+		for i in "${!buffer[@]}";
+		do
+			handleLine ${buffer[$i]} 1
+			# echo -e "$i"
+		done
+		use_buffer=1
+		empty_buffer=0
+	fi
+	resetBuffer
+}
+
+function resetBuffer() {
+	buffer=()
+}
+
+function handleLine() {
+	if [ $use_buffer -eq 1 ]; then
+		buffer=(${buffer[@]} $1)
+	else
+		# Print to console, use formatting
+		if [ $2 -eq 1 ]; then
+			echo -e "\e[1;035m$1\e[0m"
+		elif [ $2 -eq 2 ]; then
+			echo -e "\e[3;033m$1\e[0m"
+		else
+			echo "$LINE"
+		fi
+	fi
+}
+
+if [ $# -gt 0 ]; then
+	use_buffer=1
+fi
+
+while IFS= read -r LINE; do
+	if [ $use_buffer -eq 1 ] && [[ $LINE = *$@* ]]; then
+		# Did we match a line (not header)
+		if [[ $LINE != @* ]] && [[ $LINE != =* ]]; then
+			line_match=1
+		else
+			# Reset the buffer. Start it here
+			buffer=()
+			line_match=0
+		fi
+		# Match; prepare to empty the buffer
+		empty_buffer=1
+		handleLine "${LINE[@]}" 0
+	elif [[ $LINE = @* ]] ; then
+		HEADER=${LINE#*@}
+		line_match=0
+		printBuffer
+		handleLine "${HEADER[@]}" 1
+	elif [[ $LINE = =* ]] ; then
+		SUBHEADER=${LINE#*=}
+		line_match=0
+		printBuffer
+		handleLine "${SUBHEADER[@]}" 2
+	else
+		line_match=0
+		handleLine "${LINE[@]}" 0
+	fi
+done < $HELP
+printBuffer
