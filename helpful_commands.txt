@@ -18,7 +18,10 @@ arandr
 =Tmux
 tmux new -s {session_name}
 tmux attach -t {session_name}
-{Ctrl-b}-d to Exit
+[Ctrl-b]-d to Exit
+
+@Git, git
+reset --soft HEAD~{n}	=	reset commit soft
 
 @Keystrokes
 =sxhkd

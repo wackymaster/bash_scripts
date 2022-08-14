@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import re
 from typing import Optional, List, Callable
 
 
@@ -26,9 +27,13 @@ class bcolors:
     HEADER = "\033[95m"
     SUBHEADER = "\033[33m"
     BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
+    PLACEHOLDER = "\033[3m"
     ENDC = "\033[0m"
 
+
+def format_placeholder(text: str) -> str:
+    return re.sub("{(.+?)}", bcolors.PLACEHOLDER + r"{\1}" + bcolors.ENDC, text)
+    
 
 def print_header(text: str) -> None:
     print(f"{bcolors.HEADER}{text}{bcolors.ENDC}", end="")
@@ -59,7 +64,8 @@ def run_help(filename: str, match: Optional[str], isGrep: bool) -> None:
     found_match: bool = False
     buffer = Buffer()
     with open(filename) as file:
-        for line in file:
+        for raw_line in file:
+            line = format_placeholder(text=raw_line)
             if isGrep:
                 if match is not None and match in line:
                     parse_print_text(line)
