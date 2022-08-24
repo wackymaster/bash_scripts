@@ -63,14 +63,24 @@ def run_help(filename: str, match: Optional[str], isGrep: bool) -> None:
     use_buffer: bool = False if match is None else True
     found_match: bool = False
     buffer = Buffer()
+    match_w_case = False
+    # When match has uppercase characters, search with case
+    to_match = match
+    if match is not None:
+        if any(c.isupper() for c in match):
+            match_w_case = True
+        else:
+            match_w_case = False
+            to_match = match.lower()
     with open(filename) as file:
         for raw_line in file:
             line = format_placeholder(text=raw_line)
+            matched_line = line if (match_w_case) else line.lower()
             if isGrep:
-                if match is not None and match in line:
+                if to_match is not None and to_match in matched_line:
                     parse_print_text(line)
             elif use_buffer:
-                if match is not None and match in line:
+                if to_match is not None and to_match in matched_line:
                     found_match = True
                     if is_mark(text=line):
                         buffer.reset()
