@@ -19,13 +19,18 @@ arandr
 tmux new -s {session_name}
 tmux attach -t {session_name}
 [Ctrl-b]-d to Exit
+=Brightness
+brightnessctl set +10%	=	brightness up
+brightnessctl set 10%-	=	brightness down
 
 @Git, git
 reset --soft HEAD~{n}	=	reset commit soft
 
 @Keystrokes
 =sxhkd
-c-alt-shift+{hjkl}	=	sxhkd expand window
+[Ctrl-alt-shift+{hjkl}]	=	sxhkd expand window
+=display (kde)
+[Ctrl-fn-F8]		=	open external display options
 
 @Personal commands/scripts
 =Bash scripts

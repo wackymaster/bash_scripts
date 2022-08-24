@@ -72,7 +72,9 @@ def run_help(filename: str, match: Optional[str], isGrep: bool) -> None:
             elif use_buffer:
                 if match is not None and match in line:
                     found_match = True
-                if is_mark(text=line):
+                    if is_mark(text=line):
+                        buffer.reset()
+                elif is_mark(text=line):
                     buffer.flush(flush_line=parse_print_text, flag=found_match)
                     found_match = False
                 buffer.append(line)
