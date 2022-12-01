@@ -22,13 +22,15 @@ tmux attach -t {session_name}
 =Brightness
 brightnessctl set +10%	=	brightness up
 brightnessctl set 10%-	=	brightness down
+=Camera
+guvcview		=	webcam
 
 @Git, git
 reset --soft HEAD~{n}	=	reset commit soft
 
 @Keystrokes
 =sxhkd
-[Ctrl-alt-shift+{hjkl}]	=	sxhkd expand window
+[Ctrl-alt-shift+{hjkl}]	=	sxhkd resize/expand window
 =display (kde)
 [Ctrl-fn-F8]		=	open external display options
 
@@ -42,7 +44,7 @@ connect-wifi		=	connect wifi
 forget-wifi		=	forget wifi
 =Aliases
 hib			=	systemctl hibernate
-blu			=	bluetootctl power on
+blu			=	bluetoothctl power on
 sinkhead		=	headphones
 sinkspeak		=	speakers
 sinks			=	see audio
